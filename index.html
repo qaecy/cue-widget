@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-beasties-container>
+  <head>
+    <meta charset="utf-8">
+    <title>QaecyWidget</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Pico CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.conditional.min.css">
+  </head>
+  <body>
+    <div style="
+        width: 800px;
+        height: 500px;
+        border: 1px solid;
+        margin: 50px;
+        overflow: hidden;
+      " id="container">
+      <qaecy-cue dark="false"></qaecy-cue>
+    </div>
+
+    <section class="pico" style="margin-top: 20px">
+      <h4>Cue settings</h4>
+
+      <!-- Parent size -->
+      <section>
+        <p>Parent size</p>
+        <div style="display: flex; gap: 5px">
+          <input type="number" name="width" placeholder="Width" value="600" aria-label="Width" id="parent-width">
+          <input type="number" name="height" placeholder="Height" value="500" aria-label="Height" id="parent-height">
+        </div>
+      </section>
+
+      <!-- Dark mode -->
+      <section>
+        <label>
+          <input id="darkMode" name="darkMode" type="checkbox" role="switch">
+          Dark mode
+        </label>
+        <label>
+          <input id="fabMode" name="fabMode" type="checkbox" role="switch">
+          FAB mode
+        </label>
+      </section>
+
+      <!-- Project Id -->
+      <section>
+        <label>Project id</label>
+        <input type="text" id="project-id" placeholder="Project ID" aria-label="Project ID">
+      </section>
+
+      <!-- View -->
+      <details class="dropdown" id="view">
+        <summary>View</summary>
+        <ul>
+          <li data-value="document-search">Document Search</li>
+          <li data-value="document-search-simple">Document Search Simple</li>
+          <li data-value="contracts">Contracts</li>
+        </ul>
+      </details>
+    </section>
+
+    <script>
+      const PROJECT_ID = '044277d5-d5de-47ae-872c-1bfe350edd50';
+      const VIEW = 'document-search-simple';
+      const OPTIONS = {
+        auth: {
+          userPwEnabled: true,
+          providers: ['microsoft.com', 'google.com'],
+          persistence: 'LOCAL',
+        },
+        config: {
+          apiKey: 'AIzaSyCLhz5Wa3ZCERQZVurSt9bqupPeREALFLk',
+          appId: '1:151132927589:web:d11c64cc55bdc0f13ab88c',
+          measurementId: 'G-0QWLTN7GWX',
+          useEmulator: false,
+        },
+        hostApp: 'sharepoint',
+        fab: {
+          containerWidth: '400px',
+          containerHeight: '70vh',
+        },
+      };
+
+      const container = document.getElementById('container');
+      const widget = document.getElementsByTagName('qaecy-cue')[0];
+
+      // Load options once the widget is ready
+      const timer = setInterval(() => {
+        try {
+          widget.options(OPTIONS);
+          clearInterval(timer);
+        } catch (err) {
+          //
+        }
+      }, 5);
+
+      // Update width/height
+      const widthInput = document.getElementById('parent-width');
+      widthInput.addEventListener(
+        'change',
+        () => (container.style.width = `${widthInput.value}px`)
+      );
+      const heightInput = document.getElementById('parent-height');
+      heightInput.addEventListener(
+        'change',
+        () => (container.style.height = `${heightInput.value}px`)
+      );
+
+      // Toggle darkMode
+      const darkModeSwitch = document.getElementById('darkMode');
+      darkModeSwitch.addEventListener('change', () =>
+        widget.setAttribute('dark', darkModeSwitch.checked)
+      );
+
+      // Toggle fabMode
+      const fabModeSwitch = document.getElementById('fabMode');
+      fabModeSwitch.addEventListener('change', () =>
+        widget.setAttribute('fab', fabModeSwitch.checked)
+      );
+
+      // Update view
+      widget.setAttribute('view', VIEW);
+      const viewDropdown = document.getElementById('view');
+      const viewOptions = viewDropdown.querySelectorAll('li');
+      viewOptions.forEach((li) => {
+        if (li.dataset.value === VIEW) {
+          viewDropdown.querySelector('summary').textContent = li.textContent;
+        }
+      });
+      const viewSummary = viewDropdown.querySelector('summary');
+      viewDropdown.addEventListener('click', (event) => {
+        if (event.target.tagName === 'LI') {
+          const selectedOption = event.target.dataset.value;
+          widget.setAttribute('view', selectedOption);
+
+          // Update the summary text to reflect the selected value
+          viewSummary.textContent = event.target.textContent;
+
+          // Close the dropdown after selection (optional)
+          viewDropdown.removeAttribute('open');
+        }
+      });
+
+      // Update projectId
+      const idInput = document.getElementById('project-id');
+      widget.setAttribute('pid', PROJECT_ID);
+      idInput.value = PROJECT_ID;
+      idInput.addEventListener('keyup', (ev) => {
+        widget.setAttribute('pid', idInput.value);
+      });
+      idInput.addEventListener('paste', (ev) => {
+        widget.setAttribute('pid', idInput.value);
+      });
+    </script>
+  <link rel="modulepreload" href="chunk-DAQI4YGE.js"><link rel="modulepreload" href="chunk-PJ7HGDON.js"><link rel="modulepreload" href="chunk-IVPYXZHS.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
+</html>
