@@ -1,7 +1,7 @@
 # Cue widget
 The Cue widget is a simple web-component that runs Cue inside a host application.
 
-### Setup
+## Setup
 
 Below you see a minimal example of how the widget is used in your web app. The individual snippets are described in detail in this section.
 
@@ -65,7 +65,7 @@ Below you see a minimal example of how the widget is used in your web app. The i
 </html>
 ```
 
-#### 1. Load web component
+### 1. Load web component
 The latest version of the web component is loaded from cdn `https://cdn.jsdelivr.net/gh/qaecy/cue-widget/main.js`. 
 
 It is recommended to specify a specific version like `https://cdn.jsdelivr.net/gh/qaecy/cue-widget@v0.0.1/main.js`
@@ -77,13 +77,13 @@ It is recommended to specify a specific version like `https://cdn.jsdelivr.net/g
 ></script>
 ```
 
-#### 2. Add HTML tag
+### 2. Add HTML tag
 The `<qaecy-cue>` HTML tag is now available. If the attribute *fab* is set to true it will load as a Floating Action Button (FAB) and if not, Cue will scale to fit its parent element.
 ```html
 <qaecy-cue fab="true"></qaecy-cue>
 ```
 
-#### 3. Specify required attributes
+### 3. Specify required attributes
 *pid* (project id) and *view* are required attributes. These can just be hardcoded like `<qaecy-cue fab="true" pid="<MY-PROJECT>" view="document-search"></qaecy-cue>` but in a typical application they will be set dynamically:
 
 ```javascript
@@ -92,7 +92,7 @@ widget.setAttribute('view', 'document-search');
 widget.setAttribute('pid', '<MY-PROJECT>');
 ```
 
-#### 4. Set options
+### 4. Set options
 The widget must be instantiated before options can be set. A hacky way to do this is to try setting the options every 5ms until the widget is available:
 ```javascript
 setInterval(() => {
@@ -106,3 +106,23 @@ setInterval(() => {
 ```
 
 Reach out to the QAECY team to get an *<API-KEY>*, *<APP-ID>* and *<MEASUREMENT-ID>*.
+
+## Events
+The widget emits events that can be picked up by the host app. An example is the *documentClick* which is emitted when the user clicks a document that the host app should show.
+
+```javascript
+widget.addEventListener("documentClick", (ev) => {
+  console.log("Clicked document");
+  console.log(ev.detail);
+});
+```
+
+This will log the event payload to the console. In case of a document it will follow this interface:
+```typescript
+DocumentPayload {
+    contentIRI: string; // https://cue.qaecy.com/r/<PROJECT_ID>/<CONTENT_ID>
+    path: string;       // ex. /docs/report.pdf
+    md5: string;        // md5 hash of file content
+    page?: number;      // page number starting from 1
+}
+```
