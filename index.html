@@ -60,6 +60,12 @@
           <li data-value="contracts">Contracts</li>
         </ul>
       </details>
+
+      <!-- Document UUIDs -->
+      <section>
+        <label>Document UUIDs (comma separated)</label>
+        <input type="text" id="document-uuids" aria-label="Document UUIDs">
+      </section>
     </section>
 
     <script>
@@ -81,6 +87,9 @@
         fab: {
           containerWidth: '400px',
           containerHeight: '70vh',
+        },
+        hostContext: {
+          contentUUIDs: [],
         },
       };
 
@@ -160,6 +169,32 @@
       idInput.addEventListener('paste', (ev) => {
         widget.setAttribute('pid', idInput.value);
       });
+
+      // Update document UUIDs
+      const docUUIDsInput = document.getElementById('document-uuids');
+      docUUIDsInput.addEventListener('keyup', (ev) => {
+        setDocumentUUIDs(docUUIDsInput.value);
+      });
+      docUUIDsInput.addEventListener('paste', (ev) => {
+        setDocumentUUIDs(docUUIDsInput.value);
+      });
+
+      setDocumentUUIDs = (uuidString) => {
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        const uuids = uuidString
+          .split(',')
+          .map((uuid) => uuid.trim())
+          .filter((uuid) => uuid.length > 0);
+      
+        // Return if any UUID is invalid
+        if (uuids.some((uuid) => !uuidRegex.test(uuid))) {
+          return;
+        }
+        
+        OPTIONS.hostContext.contentUUIDs = uuids;
+        widget.options(OPTIONS);
+      }
+      
     </script>
-  <link rel="modulepreload" href="chunk-5WADEDAY.js"><link rel="modulepreload" href="chunk-LULXBPJJ.js"><link rel="modulepreload" href="chunk-Q4ZSJ5ZI.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
+  <link rel="modulepreload" href="chunk-5VFBSWY7.js"><link rel="modulepreload" href="chunk-ZZPP7466.js"><link rel="modulepreload" href="chunk-XYUF6GX4.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
 </html>
