@@ -105,7 +105,7 @@ setInterval(() => {
 }, 5);
 ```
 
-Reach out to the QAECY team to get an *<API-KEY>*, *<APP-ID>* and *<MEASUREMENT-ID>*.
+Reach out to the QAECY team to get an **API-KEY**, **APP-ID** and **MEASUREMENT-ID**.
 
 ## Events
 The widget emits events that can be picked up by the host app. An example is the *documentClick* which is emitted when the user clicks a document that the host app should show.
@@ -125,4 +125,19 @@ DocumentPayload {
     md5: string;        // md5 hash of file content
     page?: number;      // page number starting from 1
 }
+```
+
+## Host context
+The host context is set to restrict search and QA to a limited part of the project in the host app. For example to only search within a single document or archive. This is work in progress and we are open to discuss possibilities. At the current state, restricting the context is limited to be within an array of Cue file content UUIDs:
+
+```typescript
+const OPTIONS = {
+    ...,
+    hostContext: {
+      contentUUIDs: [
+        "2b6ca134-26f8-5d34-b3fa-d33cbdb9adca",
+        "279a5591-ff86-51b3-affe-2a99ecc24086"
+      ]
+    }
+};
 ```
