@@ -66,6 +66,12 @@
         <label>Document UUIDs (comma separated)</label>
         <input type="text" id="document-uuids" aria-label="Document UUIDs">
       </section>
+
+      <!-- Document Hashes -->
+      <section>
+        <label>Document hashes (comma separated)</label>
+        <input type="text" id="document-hashes" aria-label="Document hashes">
+      </section>
     </section>
 
     <script>
@@ -90,6 +96,7 @@
         },
         hostContext: {
           contentUUIDs: [],
+          contentHashes: [],
         },
       };
 
@@ -179,6 +186,15 @@
         setDocumentUUIDs(docUUIDsInput.value);
       });
 
+      // Update document hashes
+      const docHashesInput = document.getElementById('document-hashes');
+      docHashesInput.addEventListener('keyup', (ev) => {
+        setDocumentHashes(docHashesInput.value);
+      });
+      docHashesInput.addEventListener('paste', (ev) => {
+        setDocumentHashes(docHashesInput.value);
+      });
+
       setDocumentUUIDs = (uuidString) => {
         const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
         const uuids = uuidString
@@ -194,7 +210,23 @@
         OPTIONS.hostContext.contentUUIDs = uuids;
         widget.options(OPTIONS);
       }
+
+      setDocumentHashes = (hashString) => {
+        const hashRegex = /^[a-f0-9]{32}$/i;
+        const hashes = hashString
+          .split(',')
+          .map((hash) => hash.trim())
+          .filter((hash) => hash.length > 0);
+
+        // Return if any hash is invalid
+        if (hashes.some((hash) => !hashRegex.test(hash))) {
+          return;
+        }
+        
+        OPTIONS.hostContext.contentHashes = hashes;
+        widget.options(OPTIONS);
+      }
       
     </script>
-  <link rel="modulepreload" href="chunk-5VFBSWY7.js"><link rel="modulepreload" href="chunk-ZZPP7466.js"><link rel="modulepreload" href="chunk-XYUF6GX4.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
+  <link rel="modulepreload" href="chunk-ABTBFHZA.js"><link rel="modulepreload" href="chunk-CZJXYZ2U.js"><link rel="modulepreload" href="chunk-XYUF6GX4.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
 </html>

@@ -1,4 +1,4 @@
-import{a as o,c as q}from"./chunk-A6WL3YFQ.js";import"./chunk-5VFBSWY7.js";import{Ca as s,Ka as l,La as p,Ma as m,Q as i,_b as u,ia as c,sa as y,xc as C}from"./chunk-ZZPP7466.js";import{h as a}from"./chunk-XYUF6GX4.js";var S=(()=>{class t{_triplestore=i(q);sampleQueries=[{label:"List files",query:`PREFIX qcy: <${o.qcy}>
+import{a as o,c as q}from"./chunk-76IX7N3P.js";import"./chunk-ABTBFHZA.js";import{Ca as s,Ka as l,La as p,Ma as m,Q as i,_b as u,ia as c,sa as y,xc as C}from"./chunk-CZJXYZ2U.js";import{h as a}from"./chunk-XYUF6GX4.js";var S=(()=>{class t{_triplestore=i(q);sampleQueries=[{label:"List files",query:`PREFIX qcy: <${o.qcy}>
 
 SELECT ?content ?mimeCategory ?contentCategory (GROUP_CONCAT(?path) AS ?filePaths)
 WHERE{
