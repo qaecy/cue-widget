@@ -123,7 +123,7 @@ DocumentPayload {
     contentIRI: string; // https://cue.qaecy.com/r/<PROJECT_ID>/<CONTENT_ID>
     path: string;       // ex. /docs/report.pdf
     md5: string;        // md5 hash of file content
-    page?: number;      // page number starting from 1
+    pages?: number[];   // ranked page numbers starting from 1
 }
 ```
 
